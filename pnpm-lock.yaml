@@ -1,0 +1,25 @@
+lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+
+  .: {}
+
+  apps/dapp:
+    dependencies:
+      '@quevra/contracts':
+        specifier: workspace:*
+        version: link:../../packages/contracts
+
+  packages/contracts: {}
+
+  services/server:
+    dependencies:
+      '@quevra/contracts':
+        specifier: workspace:*
+        version: link:../../packages/contracts
+
+  tooling/ops: {}

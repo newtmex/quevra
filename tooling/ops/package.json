@@ -1,0 +1,18 @@
+{
+  "name": "@quevra/ops",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Quevra workspace development and operations tooling",
+  "main": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "scripts": {
+    "dev": "node src/dev.js",
+    "build": "node --check src/index.js",
+    "test": "node --test test/",
+    "typecheck": "node --check src/index.js",
+    "check": "pnpm run typecheck && pnpm run test && pnpm run build"
+  }
+}
