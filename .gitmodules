@@ -1,3 +1,6 @@
 [submodule "packages/contracts"]
 	path = packages/contracts
 	url = https://github.com/newtmex/quevra-contracts.git
+[submodule "services/solonet"]
+	path = services/solonet
+	url = https://github.com/monad-crypto/monad-solonet.git
