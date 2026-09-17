@@ -9,7 +9,9 @@
 
 Follow these directory patterns. Do not add new top-level directories without a strong architectural reason.
 
-`apps/dapp`, `services/server`, and `packages/contracts` are self-contained workspace packages so they can later become Git submodules without moving them. Depend on other workspace packages by name with the `workspace:` protocol, not by relative file path.
+`packages/contracts` is a Git submodule of https://github.com/newtmex/quevra-contracts. Clone this repository with `--recurse-submodules`, or run `git submodule update --init --recursive` after a plain clone.
+
+`apps/dapp` and `services/server` are self-contained workspace packages so they can later become Git submodules without moving them. Depend on other workspace packages by name with the `workspace:` protocol, not by relative file path.
 
 ## Package manager
 
