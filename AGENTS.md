@@ -53,6 +53,6 @@ Always use elevated access rpc dependent tasks
 - Group related functions with clear section comments. Keep read-only views near the public API they describe, and keep state-changing entrypoints before their internal implementation helpers.
 - Keep protocol-facing types, errors, and events in interfaces when they are part of the external contract; keep implementation-only errors and events in the implementing contract.
 - Use libraries for storage-heavy bookkeeping or reusable transformations. Pass storage explicitly to libraries and avoid duplicating index maintenance in multiple contracts.
-- Keep validator admission, stake movement, gauge accounting, reward accounting, and token ownership checks in separate logical sections or modules.
+- Keep validator admission, stake movement, staking-reward accounting, reward accounting, and token ownership checks in separate logical sections or modules.
 - Add focused tests beside the contract area they cover. Every new state transition should have tests for authorization, invalid inputs, accounting, and the normal success path.
 - Preserve checks-effects-interactions ordering and place external calls behind the narrowest internal helper that owns the invariant being protected.
