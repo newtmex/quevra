@@ -4,3 +4,6 @@
 [submodule "services/solonet"]
 	path = services/solonet
 	url = https://github.com/monad-crypto/monad-solonet.git
+[submodule "apps/dapp"]
+	path = apps/dapp
+	url = https://github.com/newtmex/quevra-dapp.git

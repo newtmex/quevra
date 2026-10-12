@@ -35,6 +35,7 @@ Root scripts orchestrate packages; they must not duplicate package implementatio
 | `test` | `pnpm --recursive run test` |
 | `typecheck` | `pnpm --recursive run typecheck` |
 | `check` | `pnpm --recursive run check` |
+| `solonet:deploy` | `pnpm --filter @quevra/ops solonet:deploy` |
 
 Target a subset with pnpm filtering, for example `pnpm --filter @quevra/dapp test`.
 
