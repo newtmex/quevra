@@ -10,10 +10,12 @@
   },
   "scripts": {
     "dev": "node src/dev.js",
-    "build": "node --check src/index.js && node --check src/solonet-deploy.js",
-    "test": "node --test",
-    "typecheck": "node --check src/index.js && node --check src/solonet-deploy.js",
+    "build": "node --check src/index.js && node --check src/solonet-deploy.js && node --check src/generate-validator-keys.js && python3 -c \"compile(open('src/sign-validator-registration.py').read(), 'src/sign-validator-registration.py', 'exec')\"",
+    "test": "node --test && PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s test -p 'test_*.py'",
+    "typecheck": "node --check src/index.js && node --check src/solonet-deploy.js && node --check src/generate-validator-keys.js && python3 -c \"compile(open('src/sign-validator-registration.py').read(), 'src/sign-validator-registration.py', 'exec')\"",
     "solonet:deploy": "node src/solonet-deploy.js",
+    "validator:keys": "node src/generate-validator-keys.js",
+    "validator:sign": "python3 src/sign-validator-registration.py",
     "check": "pnpm run typecheck && pnpm run test && pnpm run build"
   }
 }

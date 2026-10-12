@@ -4,3 +4,5 @@ dist
 .DS_Store
 .pnpm-debug.log*
 .tmp
+/validator-keys/
+.env
