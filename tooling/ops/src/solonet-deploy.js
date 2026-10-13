@@ -191,7 +191,7 @@ async function main() {
   }
 
   log("deploying Quevra contracts to Solonet");
-  await run("pnpm", ["--filter", "@quevra/contracts", "deploy:solonet", "--", "--network", "solonet"], {
+  await run("pnpm", ["--filter", "@quevra/contracts", "deploy:solonet"], {
     cwd: ROOT,
     env: deployEnv,
   });
