@@ -71,7 +71,22 @@ From the workspace root, start the local Monad Solonet and deploy Quevra's core 
 pnpm solonet:deploy
 ```
 
-The command starts `services/solonet` through its `solonetctl` wrapper, waits for chain ID `20143` at `http://127.0.0.1:48080`, then runs the contracts package's Hardhat deployment. It deploys and records a local reward token automatically when no token is configured. Deployments are recorded in `packages/contracts/deployments/20143.json`.
+The command starts `services/solonet` through its `solonetctl` wrapper, waits for chain ID `20143` at `http://127.0.0.1:48080`, runs the contracts package's Hardhat deployment, then funds the configured Solonet tester wallets. It deploys and records a local reward token automatically when no token is configured. Deployments are recorded in `packages/contracts/deployments/20143.json`.
+
+Fund the tester wallets on an already-running Solonet without redeploying:
+
+```sh
+pnpm solonet:fund-testers
+```
+
+Tester addresses and the per-wallet amount come from the repository-root `.env` (see `.env.example`):
+
+```sh
+SOLONET_TESTER_ADDRESSES=0x41Cbf317fcF3d5128ECF46e1B9f96dDf2994850A,0xa5189F3058CC50443eB9b3A39A2CcDA56f1b6bF1,0x8fFd5b0d5C76FC19CBd7198571Be8b8b814F1676
+SOLONET_TESTER_FUND_AMOUNT_MON=200000000
+```
+
+Each address receives that many native MON from the Solonet deployer key (Anvil account 0 by default). `cast` from Foundry must be on `PATH`.
 
 Requirements: initialized Git submodules, Docker with Compose, and installed workspace dependencies. On macOS, Solonet needs an x86_64 QEMU Colima VM with `cpu-type max` to provide the required 1 GB huge-page CPU support. Create a dedicated profile once and select its Docker context:
 
@@ -80,6 +95,6 @@ colima --profile solonet start --vm-type qemu --arch x86_64 --cpu-type max --cpu
 docker context use colima-solonet
 ```
 
-When that Colima profile is selected, the command starts it if its daemon is stopped. The command checks the active Colima VM type and explains this setup if it detects the incompatible macOS Virtualization.Framework VM. For other Docker contexts, start Docker before running the command. The default funded Solonet key is only for local development. To override local settings, use `SOLONET_RPC`, `SOLONET_NETWORK_FILE`, `SOLONET_START_TIMEOUT_MS`, `SOLONET_DEPLOYER_PRIVATE_KEY`, `SOLONET_PROTOCOL_OWNER_ADDRESS`, or `SOLONET_GAUGE_REWARD_TOKEN_ADDRESS`. The last two owner and token settings are intentionally scoped to this local workflow.
+When that Colima profile is selected, the command starts it if its daemon is stopped. The command checks the active Colima VM type and explains this setup if it detects the incompatible macOS Virtualization.Framework VM. For other Docker contexts, start Docker before running the command. The default funded Solonet key is only for local development. To override local settings, use `SOLONET_RPC`, `SOLONET_NETWORK_FILE`, `SOLONET_START_TIMEOUT_MS`, `SOLONET_DEPLOYER_PRIVATE_KEY`, `SOLONET_PROTOCOL_OWNER_ADDRESS`, `SOLONET_GAUGE_REWARD_TOKEN_ADDRESS`, `SOLONET_TESTER_ADDRESSES`, or `SOLONET_TESTER_FUND_AMOUNT_MON`. The owner, token, and tester settings are intentionally scoped to this local workflow.
 
 The Solonet remains running after deployment. Stop it with `services/solonet/solonetctl -f services/solonet/network.toml down`.

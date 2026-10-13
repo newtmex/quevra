@@ -195,6 +195,13 @@ async function main() {
     cwd: ROOT,
     env: deployEnv,
   });
+
+  log("funding Solonet tester accounts");
+  await run("node", [path.join(path.dirname(fileURLToPath(import.meta.url)), "solonet-fund-testers.js")], {
+    cwd: ROOT,
+    env: deployEnv,
+  });
+
   log("Solonet and Quevra contracts are ready");
 }
 

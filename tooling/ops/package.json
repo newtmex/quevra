@@ -10,10 +10,11 @@
   },
   "scripts": {
     "dev": "node src/dev.js",
-    "build": "node --check src/index.js && node --check src/solonet-deploy.js && node --check src/generate-validator-keys.js && python3 -c \"compile(open('src/sign-validator-registration.py').read(), 'src/sign-validator-registration.py', 'exec')\"",
+    "build": "node --check src/index.js && node --check src/solonet-deploy.js && node --check src/solonet-fund-testers.js && node --check src/generate-validator-keys.js && python3 -c \"compile(open('src/sign-validator-registration.py').read(), 'src/sign-validator-registration.py', 'exec')\"",
     "test": "node --test && PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s test -p 'test_*.py'",
-    "typecheck": "node --check src/index.js && node --check src/solonet-deploy.js && node --check src/generate-validator-keys.js && python3 -c \"compile(open('src/sign-validator-registration.py').read(), 'src/sign-validator-registration.py', 'exec')\"",
+    "typecheck": "node --check src/index.js && node --check src/solonet-deploy.js && node --check src/solonet-fund-testers.js && node --check src/generate-validator-keys.js && python3 -c \"compile(open('src/sign-validator-registration.py').read(), 'src/sign-validator-registration.py', 'exec')\"",
     "solonet:deploy": "node src/solonet-deploy.js",
+    "solonet:fund-testers": "node src/solonet-fund-testers.js",
     "keystore:build": "bash ./scripts/monad-keystore.sh build",
     "keystore:create": "bash ./scripts/monad-keystore.sh create",
     "keystore:public": "bash ./scripts/monad-keystore.sh public",
