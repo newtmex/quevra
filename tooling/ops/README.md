@@ -51,7 +51,7 @@ pnpm --filter @quevra/ops keystore:build
 
 The container signer imports Monad's `KeyGenerator` and `generateCalldata.add_validator`, checks the returned selector, and decodes the official SDK calldata into the payload and signatures Quevra expects.
 
-In the dapp, click **Generate signing data**, copy the JSON request, and save it as `quevra-validator-request.json` on the operator machine. Then run:
+In the dapp ([https://quevra-pearl.vercel.app](https://quevra-pearl.vercel.app) on Monad testnet, or a local build), click **Generate signing data**, copy the JSON request, and save it as `quevra-validator-request.json` on the operator machine. Then run:
 
 ```sh
 pnpm validator:sign
