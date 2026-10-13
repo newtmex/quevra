@@ -7,3 +7,6 @@
 [submodule "apps/dapp"]
 	path = apps/dapp
 	url = https://github.com/newtmex/quevra-dapp.git
+[submodule "services/indexer"]
+	path = services/indexer
+	url = https://github.com/newtmex/quevra-indexer.git
