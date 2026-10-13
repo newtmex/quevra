@@ -65,6 +65,7 @@ def validate_request(value):
 
 
 def recover_private_key(keystore_path, key_type, password):
+    sys.stderr.write(f"Recovering the {key_type.upper()} keystore inside Docker...\n")
     try:
         result = subprocess.run(
             ["monad-keystore", "recover", "--password", password, "--keystore-path", keystore_path, "--key-type", key_type],
@@ -156,23 +157,31 @@ def main():
     parser.add_argument("--secp-keystore-path", required=True, help="Existing Monad SECP keystore path")
     parser.add_argument("--bls-keystore-path", required=True, help="Existing Monad BLS keystore path")
     parser.add_argument("--out", help="Artifact path; defaults to ignored validator-keys/ folder")
+    parser.add_argument("--password-stdin", action="store_true", help=argparse.SUPPRESS)
     args = parser.parse_args()
-    load_repository_env()
-    password = os.environ.get("KEYSTORE_PASSWORD")
+    if args.password_stdin:
+        password = sys.stdin.read()
+    else:
+        load_repository_env()
+        password = os.environ.get("KEYSTORE_PASSWORD")
     if not password:
         fail("Set KEYSTORE_PASSWORD in the environment or repository .env before signing.")
 
     request = validate_request(json.loads(Path(args.request).read_text(encoding="utf8")))
     secp_key = recover_private_key(args.secp_keystore_path, "secp", password)
     bls_key = recover_private_key(args.bls_keystore_path, "bls", password)
+    sys.stderr.write("Signing the registration payload with Monad's official SDK...\n")
     artifact = sign_with_monad_sdk(request, secp_key, bls_key)
     output = json.dumps(artifact, indent=2) + "\n"
 
-    repo_root = Path(__file__).resolve().parents[3]
-    default_dir = repo_root / "validator-keys"
-    default_dir.mkdir(mode=0o700, parents=True, exist_ok=True)
-    os.chmod(default_dir, 0o700)
-    output_path = Path(args.out).resolve() if args.out else default_dir / f"registration-{os.getpid()}.json"
+    if args.out:
+        output_path = Path(args.out).resolve()
+    else:
+        repo_root = Path(__file__).resolve().parents[3]
+        default_dir = repo_root / "validator-keys"
+        default_dir.mkdir(mode=0o700, parents=True, exist_ok=True)
+        os.chmod(default_dir, 0o700)
+        output_path = default_dir / f"registration-{os.getpid()}.json"
     output_path.parent.mkdir(mode=0o700, parents=True, exist_ok=True)
     try:
         with output_path.open("x", encoding="utf8") as artifact_file:
@@ -181,6 +190,7 @@ def main():
     except FileExistsError:
         fail(f"Refusing to overwrite existing artifact: {output_path}")
     # stdout is the portable signed message the operator pastes into Quevra.
+    sys.stderr.write("Signed public artifact created.\n")
     sys.stdout.write(output)
 
 

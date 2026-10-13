@@ -14,8 +14,13 @@
     "test": "node --test && PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s test -p 'test_*.py'",
     "typecheck": "node --check src/index.js && node --check src/solonet-deploy.js && node --check src/generate-validator-keys.js && python3 -c \"compile(open('src/sign-validator-registration.py').read(), 'src/sign-validator-registration.py', 'exec')\"",
     "solonet:deploy": "node src/solonet-deploy.js",
+    "keystore:build": "bash ./scripts/monad-keystore.sh build",
+    "keystore:create": "bash ./scripts/monad-keystore.sh create",
+    "keystore:public": "bash ./scripts/monad-keystore.sh public",
+    "keystore:version": "bash ./scripts/monad-keystore.sh version",
+    "keystore:help": "bash ./scripts/monad-keystore.sh help",
     "validator:keys": "node src/generate-validator-keys.js",
-    "validator:sign": "python3 src/sign-validator-registration.py",
+    "validator:sign": "bash ./scripts/monad-keystore.sh sign",
     "check": "pnpm run typecheck && pnpm run test && pnpm run build"
   }
 }
